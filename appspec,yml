@@ -1,0 +1,16 @@
+version: 0.0  # 필수 값 (고정 0.0)
+os: linux   # EC2 배포 운영체제 ( 아마존 LINUX 사용)
+
+files:
+   - source: /
+     destination: /home/ec2-user
+     
+ hooks:
+   ApplicationStop: 
+     - location : script/kill_pro.sh   # applicationstop 생명주기 -> sh 실행
+   
+   BeforeInstall:
+     - location: script/remove_before.sh  # beforeinstall 생명주기 -> sh 실행 (전에 생성된 것 삭제)
+     
+   ApplicationStart:
+     - location: script/run_process.sh  # applicationstart 생명주기 -? sh 실행
